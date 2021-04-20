@@ -38,6 +38,7 @@ connectButton.addEventListener('click', () => {
 
 // SOCKET EVENT CALLBACKS =====================================================
 socket.on('room_created', async () => {
+  debugger;
   console.log('BAP', "socket.on('room_created'")
   console.log('Socket event callback: room_created')
 
@@ -46,6 +47,7 @@ socket.on('room_created', async () => {
 })
 
 socket.on('room_joined', async () => {
+  debugger;
   console.log('BAP', "socket.on('room_joined'")
   console.log('Socket event callback: room_joined')
 
@@ -54,6 +56,7 @@ socket.on('room_joined', async () => {
 })
 
 socket.on('full_room', () => {
+  debugger;
   console.log('BAP', "socket.on('full_room'")
   console.log('Socket event callback: full_room')
 
@@ -62,6 +65,7 @@ socket.on('full_room', () => {
 
 // FUNCTIONS ==================================================================
 function joinRoom(room) {
+  debugger;
   console.log('BAP', "function joinRoom(room)")
   if (room === '') {
     alert('Please type a room ID')
@@ -73,12 +77,14 @@ function joinRoom(room) {
 }
 
 function showVideoConference() {
+  debugger;
   console.log('BAP', "function showVideoConference() {")
   roomSelectionContainer.style = 'display: none'
   videoChatContainer.style = 'display: block'
 }
 
 async function setLocalStream(mediaConstraints) {
+  debugger;
   console.log('BAP', "function showVideoConference() {")
   let stream
   try {
@@ -93,6 +99,7 @@ async function setLocalStream(mediaConstraints) {
 
 // SOCKET EVENT CALLBACKS =====================================================
 socket.on('start_call', async () => {
+  debugger;
   console.log('BAP', "function showVideoConference() {")
     console.log('Socket event callback: start_call')
   
@@ -106,6 +113,7 @@ socket.on('start_call', async () => {
   })
   
   socket.on('webrtc_offer', async (event) => {
+    debugger;
     console.log('Socket event callback: webrtc_offer')
   
     if (!isRoomCreator) {
@@ -119,12 +127,14 @@ socket.on('start_call', async () => {
   })
   
   socket.on('webrtc_answer', (event) => {
+    debugger;
     console.log('Socket event callback: webrtc_answer')
   
     rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event))
   })
   
   socket.on('webrtc_ice_candidate', (event) => {
+    debugger;
     console.log('Socket event callback: webrtc_ice_candidate')
   
     // ICE candidate configuration.
@@ -137,6 +147,7 @@ socket.on('start_call', async () => {
   
   // FUNCTIONS ==================================================================
   function addLocalTracks(rtcPeerConnection) {
+    debugger;
     console.log('BAP', "function addLocalTracks(rtcPeerConnection)")
     localStream.getTracks().forEach((track) => {
       rtcPeerConnection.addTrack(track, localStream)
@@ -144,6 +155,7 @@ socket.on('start_call', async () => {
   }
   
   async function createOffer(rtcPeerConnection) {
+    debugger;
     console.log('BAP', "async function createOffer(rtcPeerConnection)")
     let sessionDescription
     try {
@@ -161,6 +173,7 @@ socket.on('start_call', async () => {
   }
   
   async function createAnswer(rtcPeerConnection) {
+    debugger;
     console.log('BAP', "async function createAnswer(rtcPeerConnection)")
     let sessionDescription
     try {
@@ -178,12 +191,14 @@ socket.on('start_call', async () => {
   }
   
   function setRemoteStream(event) {
+    debugger;
     console.log('BAP', "function setRemoteStream(event)")
     remoteVideoComponent.srcObject = event.streams[0]
     remoteStream = event.stream
   }
   
   function sendIceCandidate(event) {
+    debugger;
     console.log('BAP', "function sendIceCandidate(event)")
     if (event.candidate) {
       socket.emit('webrtc_ice_candidate', {
