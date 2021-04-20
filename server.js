@@ -6,7 +6,9 @@ const io = require('socket.io')(server)
 app.use('/', express.static('public'))
 
 io.on('connection', (socket) => {
+  console.log('BAP', 'connection')
   socket.on('join', (roomId) => {
+  console.log('BAP', 'conn--join')
     const roomClients = io.sockets.adapter.rooms[roomId] || { length: 0 }
     const numberOfClients = roomClients.length
 
@@ -27,18 +29,22 @@ io.on('connection', (socket) => {
 
   // These events are emitted to all the sockets connected to the same room except the sender.
   socket.on('start_call', (roomId) => {
+    console.log('BAP', 'conn--start_call')
     console.log(`Broadcasting start_call event to peers in room ${roomId}`)
     socket.broadcast.to(roomId).emit('start_call')
   })
   socket.on('webrtc_offer', (event) => {
+    console.log('BAP', 'conn--webrtc_offer')
     console.log(`Broadcasting webrtc_offer event to peers in room ${event.roomId}`)
     socket.broadcast.to(event.roomId).emit('webrtc_offer', event.sdp)
   })
   socket.on('webrtc_answer', (event) => {
+    console.log('BAP', 'conn--webrtc_answer')
     console.log(`Broadcasting webrtc_answer event to peers in room ${event.roomId}`)
     socket.broadcast.to(event.roomId).emit('webrtc_answer', event.sdp)
   })
   socket.on('webrtc_ice_candidate', (event) => {
+    console.log('BAP', 'conn--webrtc_ice_candidate')
     console.log(`Broadcasting webrtc_ice_candidate event to peers in room ${event.roomId}`)
     socket.broadcast.to(event.roomId).emit('webrtc_ice_candidate', event)
   })
